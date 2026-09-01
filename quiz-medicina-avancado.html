@@ -830,163 +830,91 @@
     </div>
 
     <script>
-        // ===== DADOS DO QUIZ =====
+        // ===== DADOS DO QUIZ COM GABARITO EMBARALHADO A, B, C, D, E =====
         const questionsData = [
             {
                 id: 1,
                 context: "A telemedicina tem revolucionado o acesso à saúde, permitindo consultas remotas entre médicos e pacientes. Segundo estudos recentes, mais de 70% dos pacientes em áreas rurais preferem consultas virtuais para economizar tempo e custos de deslocamento.",
                 question: "Com base no contexto, qual é o principal benefício da telemedicina mencionado para pacientes em áreas rurais?",
-                options: [
-                    "A) Melhor diagnóstico através de equipamentos mais modernos",
-                    "B) Economia de tempo e redução de custos de deslocamento",
-                    "C) Eliminação completa da necessidade de consultas presenciais",
-                    "D) Aumento da receita dos hospitais privados"
-                ],
-                correctAnswer: "B) Economia de tempo e redução de custos de deslocamento",
-                difficulty: "Médio"
+                options: ["A) Eliminação completa da necessidade de consultas presenciais", "B) Economia de tempo e redução de custos de deslocamento", "C) Diagnóstico 100% preciso via tecnologia de IA", "D) Aumento da receita dos hospitais privados", "E) Substituição de todos os equipamentos hospitalares"],
+                correctAnswer: "B) Economia de tempo e redução de custos de deslocamento"
             },
             {
                 id: 2,
                 context: "A inteligência artificial (IA) está sendo aplicada no diagnóstico de câncer de mama através de análise de imagens de mamografia. Pesquisas mostram que algoritmos de IA conseguem detectar tumores com 94% de precisão, frequentemente superando a análise manual de radiologistas em casos complexos.",
                 question: "Qual é a vantagem principal da IA na detecção de câncer de mama conforme o contexto apresentado?",
-                options: [
-                    "A) Substituir completamente os radiologistas",
-                    "B) Alta precisão na detecção de tumores, muitas vezes superior à análise manual",
-                    "C) Reduzir o tempo de tratamento dos pacientes",
-                    "D) Eliminar a necessidade de mamografias"
-                ],
-                correctAnswer: "B) Alta precisão na detecção de tumores, muitas vezes superior à análise manual",
-                difficulty: "Médio"
+                options: ["A) Cura automática do câncer sem necessidade de tratamento", "B) Elimina completamente o risco de câncer de mama", "C) Reduz o tempo de tratamento dos pacientes em 1 dia", "D) Alta precisão na detecção de tumores, muitas vezes superior à análise manual", "E) Substitui permanentemente todos os radiologistas"],
+                correctAnswer: "D) Alta precisão na detecção de tumores, muitas vezes superior à análise manual"
             },
             {
                 id: 3,
                 context: "O prontuário eletrônico de saúde (PES) permite o armazenamento digital de dados médicos dos pacientes, facilitando o acesso rápido às informações clínicas. Hospitais que implementaram o PES relataram redução de 30% nos erros de medicação e aumento de 40% na eficiência administrativa.",
                 question: "De acordo com o texto, quais são os principais benefícios do prontuário eletrônico de saúde?",
-                options: [
-                    "A) Apenas redução de custos operacionais",
-                    "B) Redução de erros de medicação e aumento de eficiência administrativa",
-                    "C) Eliminação de consultas médicas presenciais",
-                    "D) Tratamento automático de doenças"
-                ],
-                correctAnswer: "B) Redução de erros de medicação e aumento de eficiência administrativa",
-                difficulty: "Médio"
+                options: ["A) Redução de erros de medicação e aumento de eficiência administrativa", "B) Apenas redução de custos operacionais em 100%", "C) Tratamento automático de doenças sem necessidade de médicos", "D) Permite que pacientes se auto-diagnostiquem com precisão", "E) Eliminação de todas as doenças crônicas"],
+                correctAnswer: "A) Redução de erros de medicação e aumento de eficiência administrativa"
             },
             {
                 id: 4,
                 context: "A cirurgia robótica permite procedimentos minimamente invasivos com precisão micrométrica. Cirurgiões controlam o robô Da Vinci remotamente, realizando movimentos mais precisos do que seria possível manualmente. Estudos mostram que pacientes submetidos a cirurgias robóticas têm recuperação 25% mais rápida.",
                 question: "Qual é a principal vantagem da cirurgia robótica mencionada no contexto?",
-                options: [
-                    "A) Elimina a necessidade de cirurgiões",
-                    "B) Precisão micrométrica e recuperação mais rápida do paciente",
-                    "C) Redução de custos hospitalares em 100%",
-                    "D) Cura automática de todas as doenças"
-                ],
-                correctAnswer: "B) Precisão micrométrica e recuperação mais rápida do paciente",
-                difficulty: "Médio"
+                options: ["A) Redução de custos hospitalares em 100%", "B) Cura automática de todas as doenças cirúrgicas", "C) Recuperação mais rápida e precisão micrométrica", "D) Elimina a necessidade de cirurgiões", "E) Permite que pacientes operem a si mesmos"],
+                correctAnswer: "C) Recuperação mais rápida e precisão micrométrica"
             },
             {
                 id: 5,
                 context: "Dispositivos wearables como smartwatches médicos monitoram continuamente sinais vitais como frequência cardíaca, pressão arterial e níveis de oxigenação. Um estudo com 500 pacientes com arritmia cardíaca mostrou que detecção precoce com wearables reduziu internações de emergência em 45%.",
                 question: "Segundo o contexto, qual é o impacto do monitoramento contínuo com dispositivos wearables?",
-                options: [
-                    "A) Diagnóstico garantido de todas as doenças",
-                    "B) Detecção precoce de problemas cardíacos e redução de internações",
-                    "C) Substituição permanente de médicos",
-                    "D) Impossibilidade de pacientes irem ao hospital"
-                ],
-                correctAnswer: "B) Detecção precoce de problemas cardíacos e redução de internações",
-                difficulty: "Médio"
+                options: ["A) Detecção precoce de problemas cardíacos e redução de internações", "B) Impossibilidade de pacientes ficarem doentes", "C) Diagnóstico garantido de todas as doenças", "D) Cura instantânea de arritmia cardíaca", "E) Substituição permanente de médicos"],
+                correctAnswer: "A) Detecção precoce de problemas cardíacos e redução de internações"
             },
             {
                 id: 6,
                 context: "A realidade aumentada (RA) está revolucionando o treinamento de cirurgiões. Estudantes podem praticar procedimentos em ambientes virtuais antes de operar em pacientes reais. Simulações em RA mostram que reduzem complicações cirúrgicas em 35% entre cirurgiões em treinamento.",
                 question: "Como a realidade aumentada beneficia o treinamento cirúrgico conforme descrito?",
-                options: [
-                    "A) Substitui completamente a educação médica universitária",
-                    "B) Permite prática virtual segura e reduz complicações em cirurgias reais",
-                    "C) Garante que nenhum erro ocorrerá durante cirurgias",
-                    "D) Elimina a necessidade de hospitais"
-                ],
-                correctAnswer: "B) Permite prática virtual segura e reduz complicações em cirurgias reais",
-                difficulty: "Médio"
+                options: ["A) Garante que nenhum erro ocorrerá durante cirurgias", "B) Permite prática virtual segura e reduz complicações em cirurgias reais", "C) Elimina a necessidade de escolas de medicina", "D) Substitui completamente os pacientes reais", "E) Substitui por completo a necessidade de anestesia"],
+                correctAnswer: "B) Permite prática virtual segura e reduz complicações em cirurgias reais"
             },
             {
                 id: 7,
                 context: "O sequenciamento genético usando tecnologia de próxima geração (NGS) permite análise rápida e completa do genoma humano. Pacientes com histórico de câncer familiar podem fazer testes genéticos em 48 horas, identificando mutações que aumentam o risco. Isso possibilita tratamentos preventivos personalizados.",
                 question: "Qual é a aplicação do sequenciamento genético mencionada no contexto?",
-                options: [
-                    "A) Substituição do tratamento convencional",
-                    "B) Identificação de mutações genéticas para tratamentos preventivos personalizados",
-                    "C) Garantia absoluta de que pacientes não terão câncer",
-                    "D) Eliminação de todos os genes problemáticos"
-                ],
-                correctAnswer: "B) Identificação de mutações genéticas para tratamentos preventivos personalizados",
-                difficulty: "Médio"
+                options: ["A) Identificação de mutações genéticas para tratamentos preventivos personalizados", "B) Garantia absoluta de que pacientes não terão doenças genéticas", "C) Criação de super-humanos geneticamente perfeitos", "D) Substituição do tratamento convencional completamente", "E) Eliminação de todos os genes problemáticos automaticamente"],
+                correctAnswer: "A) Identificação de mutações genéticas para tratamentos preventivos personalizados"
             },
             {
                 id: 8,
                 context: "Sistemas de análise de imagem médica por IA utilizam redes neurais profundas para examinar tomografias, ressonâncias magnéticas e radiografias. Um hospital implementou esse sistema e reduziu o tempo de análise de imagens de 90 minutos para 15 minutos, acelerando diagnósticos e permitindo atendimento a mais pacientes.",
                 question: "De acordo com o texto, qual é o impacto da análise de imagem por IA no atendimento hospitalar?",
-                options: [
-                    "A) Elimina a necessidade de radiologistas",
-                    "B) Aumento significativo da velocidade de diagnóstico e atendimento a mais pacientes",
-                    "C) Redução de 50% dos salários médicos",
-                    "D) Garantia de diagnósticos 100% corretos"
-                ],
-                correctAnswer: "B) Aumento significativo da velocidade de diagnóstico e atendimento a mais pacientes",
-                difficulty: "Médio"
+                options: ["A) Reduz significativamente o tempo de diagnóstico e atende mais pacientes", "B) Redução de 50% dos salários médicos", "C) Garantia de diagnósticos 100% corretos sem erros", "D) Permite que leigos façam diagnósticos profissionais", "E) Elimina radiologistas das instituições"],
+                correctAnswer: "A) Reduz significativamente o tempo de diagnóstico e atende mais pacientes"
             },
             {
                 id: 9,
                 context: "Aplicativos móveis de saúde (mHealth) permitem que pacientes monitorem sua saúde, recebam lembretes de medicamentos e comuniquem-se com médicos. Uma pesquisa com diabéticos mostrou que o uso de apps de mHealth resultou em 23% de melhora no controle de glicose e maior aderência ao tratamento.",
                 question: "Segundo o contexto, qual é o benefício dos aplicativos mHealth para pacientes crônicos?",
-                options: [
-                    "A) Cura instantânea de todas as doenças",
-                    "B) Melhora no controle da doença e maior aderência ao tratamento",
-                    "C) Eliminação completa da necessidade de medicamentos",
-                    "D) Garantia de que pacientes nunca ficará doente"
-                ],
-                correctAnswer: "B) Melhora no controle da doença e maior aderência ao tratamento",
-                difficulty: "Médio"
+                options: ["A) Melhora no controle da doença e maior aderência ao tratamento", "B) Eliminação completa da necessidade de medicamentos", "C) Impossibilidade de pacientes ficarem doentes", "D) Cura instantânea de todas as doenças crônicas", "E) Substituição de consultórios médicos por robôs"],
+                correctAnswer: "A) Melhora no controle da doença e maior aderência ao tratamento"
             },
             {
                 id: 10,
                 context: "A biometria (impressão digital, íris, reconhecimento facial) está sendo usada para garantir a segurança de dados de pacientes. Hospitais que implementaram acesso biométrico aos prontuários eletrônicos reduziram acessos não autorizados em 98% e melhoraram a conformidade com regulamentações de privacidade.",
                 question: "Qual é a função principal da biometria no contexto de segurança hospitalar?",
-                options: [
-                    "A) Substituir completamente os médicos",
-                    "B) Garantir segurança de dados de pacientes e conformidade com privacidade",
-                    "C) Impedir que pacientes acessem seus próprios dados",
-                    "D) Eliminar a necessidade de senhas"
-                ],
-                correctAnswer: "B) Garantir segurança de dados de pacientes e conformidade com privacidade",
-                difficulty: "Médio"
+                options: ["A) Identificação de criminosos nas ruas", "B) Impedir completamente que pacientes acessem seus dados", "C) Garantir segurança de dados de pacientes e conformidade com privacidade", "D) Eliminar a necessidade de senhas em todas as aplicações", "E) Substituir completamente os médicos por sistemas automáticos"],
+                correctAnswer: "C) Garantir segurança de dados de pacientes e conformidade com privacidade"
             },
             {
                 id: 11,
                 context: "A telemedicina assíncrona permite que pacientes enviem imagens, vídeos e históricos para especialistas avaliarem quando conveniente. Estudos mostram que esse modelo reduz tempo de espera em 60% para especialidades como dermatologia e oftalmologia, mantendo qualidade diagnóstica similar a consultas presenciais.",
                 question: "Como a telemedicina assíncrona melhora o acesso a especialidades conforme o contexto?",
-                options: [
-                    "A) Obriga pacientes a esperar mais tempo",
-                    "B) Reduz tempo de espera significativamente mantendo qualidade diagnóstica",
-                    "C) Impossibilita diagnósticos corretos",
-                    "D) Aumenta os custos de atendimento"
-                ],
-                correctAnswer: "B) Reduz tempo de espera significativamente mantendo qualidade diagnóstica",
-                difficulty: "Médio"
+                options: ["A) Reduz tempo de espera significativamente mantendo qualidade diagnóstica", "B) Aumenta exponencialmente os custos de atendimento", "C) Elimina a privacidade dos pacientes completamente", "D) Impossibilita diagnósticos corretos completamente", "E) Obriga pacientes a esperar meses por atendimento"],
+                correctAnswer: "A) Reduz tempo de espera significativamente mantendo qualidade diagnóstica"
             },
             {
                 id: 12,
                 context: "Tecnologias de internet das coisas (IoT) em hospitais conectam equipamentos médicos, camas de pacientes e sensores ambientais. Isso permite monitoramento em tempo real de pacientes internados, alertas automáticos em caso de anomalias e coleta de dados para pesquisa. Hospitais com IoT implementado reduziram infecções hospitalares em 28%.",
                 question: "Qual é o principal benefício da tecnologia IoT em ambientes hospitalares segundo o texto?",
-                options: [
-                    "A) Substituição de toda a equipe médica por robôs",
-                    "B) Monitoramento em tempo real com alertas automáticos e redução de complicações",
-                    "C) Eliminação da necessidade de médicos nos hospitais",
-                    "D) Garantia de que nenhum paciente ficará doente"
-                ],
-                correctAnswer: "B) Monitoramento em tempo real com alertas automáticos e redução de complicações",
-                difficulty: "Médio"
+                options: ["A) Monitoramento em tempo real com alertas automáticos e redução de complicações", "B) Garantia de que nenhum paciente ficará doente", "C) Impossibilidade de erros médicos ocorrerem", "D) Substituição de toda a equipe médica por robôs inteligentes", "E) Eliminação da necessidade de médicos nos hospitais"],
+                correctAnswer: "A) Monitoramento em tempo real com alertas automáticos e redução de complicações"
             }
         ];
 
@@ -1104,7 +1032,6 @@
         }
 
         function goToStatistics() {
-            // Pode ser expandido para uma tela de estatísticas detalhadas
             goToHistory();
         }
 
@@ -1241,20 +1168,19 @@
 
             const resultMessage = document.getElementById('resultMessage');
             if (percentage === 100) {
-                resultMessage.textContent = '🏆 Perfeito! Conhecimento excelente!';
+                resultMessage.textContent = '🏆 Perfeito! Você é um expert em Tecnologia na Medicina!';
                 resultMessage.className = 'result-message excellent';
             } else if (percentage >= 80) {
-                resultMessage.textContent = '⭐ Muito bom! Excelente desempenho!';
+                resultMessage.textContent = '⭐ Muito bom! Você domina bem o assunto!';
                 resultMessage.className = 'result-message good';
             } else if (percentage >= 60) {
-                resultMessage.textContent = '👍 Bom! Você tem bom conhecimento.';
+                resultMessage.textContent = '👍 Bom! Você tem conhecimento sólido.';
                 resultMessage.className = 'result-message good';
             } else {
-                resultMessage.textContent = '📚 Continue estudando para melhorar!';
+                resultMessage.textContent = '📚 Continue estudando para melhorar seus conhecimentos!';
                 resultMessage.className = 'result-message review';
             }
 
-            // Salvar resultado
             const attempt = {
                 id: Date.now(),
                 date: now.toISOString(),
