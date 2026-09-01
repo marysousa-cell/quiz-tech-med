@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Tecnologia na Medicina - Sistema Avançado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.4);
+            max-width: 1000px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 0.95em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        /* ===== LOGIN/REGISTRO ===== */
+        .login-screen {
+            display: none;
+        }
+
+        .login-screen.active {
+            display: block;
+        }
+
+        .login-form, .register-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #0d47a1;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0d47a1;
+            box-shadow: 0 0 10px rgba(13, 71, 161, 0.2);
+        }
+
+        .btn-login, .btn-register {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover, .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(13, 71, 161, 0.3);
+        }
+
+        .toggle-form {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .toggle-form button {
+            background: none;
+            border: none;
+            color: #0d47a1;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .toggle-form button:hover {
+            text-decoration: none;
+        }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard-screen {
+            display: none;
+        }
+
+        .dashboard-screen.active {
+            display: block;
+        }
+
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #0d47a1;
+        }
+
+        .user-info-text h3 {
+            color: #0d47a1;
+            margin-bottom: 5px;
+        }
+
+        .user-info-text p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .btn-logout {
+            background: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: #f5f5f5;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #0d47a1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(13, 71, 161, 0.2);
+        }
+
+        .dashboard-card h3 {
+            color: #0d47a1;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .dashboard-card p {
+            color: #666;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .btn-start-quiz {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-start-quiz:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(13, 71, 161, 0.3);
+        }
+
+        /* ===== HISTÓRICO ===== */
+        .history-screen {
+            display: none;
+        }
+
+        .history-screen.active {
+            display: block;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .history-table th {
+            background: #0d47a1;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .history-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .history-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .score-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .score-badge.excellent {
+            background: #4caf50;
+        }
+
+        .score-badge.good {
+            background: #2196f3;
+        }
+
+        .score-badge.review {
+            background: #ff9800;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        /* ===== QUIZ ===== */
+        .quiz-screen {
+            display: none;
+        }
+
+        .quiz-screen.active {
+            display: block;
+        }
+
+        .quiz-header {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #0d47a1;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #0d47a1, #1565c0);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.9em;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .question-container {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            color: #0d47a1;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .context-text {
+            background: #e8f1ff;
+            padding: 15px;
+            border-left: 4px solid #0d47a1;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            color: #333;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .context-label {
+            font-weight: bold;
+            color: #0d47a1;
+            margin-bottom: 8px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: #0d47a1;
+            background: #f0f7ff;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 15px;
+            margin-top: 3px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #0d47a1;
+            flex-shrink: 0;
+        }
+
+        .option-text {
+            font-size: 1.05em;
+            color: #333;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .option.selected {
+            background: #e8f1ff;
+            border-color: #0d47a1;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-left: 4px solid #4caf50;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #f44336;
+        }
+
+        .quiz-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-prev, .btn-next, .btn-finish {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .btn-prev {
+            background: #e0e0e0;
+            color: #333;
+            flex: 1;
+        }
+
+        .btn-prev:hover {
+            background: #d0d0d0;
+        }
+
+        .btn-next, .btn-finish {
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-next:hover:not(:disabled), .btn-finish:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(13, 71, 161, 0.3);
+        }
+
+        .btn-next:disabled, .btn-finish:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ===== RESULTADOS ===== */
+        .results-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .results-screen.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin: 30px auto;
+            box-shadow: 0 15px 40px rgba(13, 71, 161, 0.3);
+        }
+
+        .score-number {
+            font-size: 3.5em;
+            font-weight: bold;
+        }
+
+        .score-text {
+            font-size: 0.95em;
+            opacity: 0.95;
+        }
+
+        .result-message {
+            font-size: 1.5em;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        .result-message.excellent {
+            color: #4caf50;
+        }
+
+        .result-message.good {
+            color: #2196f3;
+        }
+
+        .result-message.review {
+            color: #ff9800;
+        }
+
+        .result-details {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .result-details p {
+            margin: 12px 0;
+            color: #333;
+            font-size: 1.05em;
+        }
+
+        .answer-summary {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .answer-item {
+            padding: 15px;
+            background: white;
+            border-left: 4px solid #e0e0e0;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .answer-item.correct {
+            border-left-color: #4caf50;
+        }
+
+        .answer-item.incorrect {
+            border-left-color: #f44336;
+        }
+
+        .answer-item-title {
+            font-weight: bold;
+            color: #0d47a1;
+            margin-bottom: 8px;
+        }
+
+        .answer-item-text {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+
+        .answer-item-result {
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .answer-item.correct .answer-item-result {
+            color: #4caf50;
+        }
+
+        .answer-item.incorrect .answer-item-result {
+            color: #f44336;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-new-quiz, .btn-back {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-new-quiz {
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            color: white;
+        }
+
+        .btn-new-quiz:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(13, 71, 161, 0.3);
+        }
+
+        .btn-back {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-back:hover {
+            background: #d0d0d0;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f44336;
+        }
+
+        .success-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4caf50;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-circle {
+                width: 160px;
+                height: 160px;
+            }
+
+            .score-number {
+                font-size: 2.5em;
+            }
+
+            .quiz-buttons, .btn-group {
+                flex-direction: column;
+            }
+
+            .history-table {
+                font-size: 0.9em;
+            }
+
+            .history-table th, .history-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥💻 Quiz: Tecnologia na Medicina</h1>
+            <p>Teste seus conhecimentos sobre a aplicação de tecnologia na área médica</p>
+        </div>
+
+        <div class="content">
+            <!-- ===== LOGIN/REGISTRO ===== -->
+            <div class="login-screen active">
+                <div class="login-form" id="loginForm">
+                    <h2 style="text-align: center; margin-bottom: 30px; color: #0d47a1;">Fazer Login</h2>
+                    <div class="form-group">
+                        <label for="loginEmail">Email:</label>
+                        <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Senha:</label>
+                        <input type="password" id="loginPassword" placeholder="Digite sua senha" required>
+                    </div>
+                    <button class="btn-login" onclick="login()">🔐 Entrar</button>
+                    <div class="toggle-form">
+                        <p>Não tem conta? <button onclick="toggleForm()">Registre-se aqui</button></p>
+                    </div>
+                </div>
+
+                <div class="register-form" id="registerForm" style="display: none;">
+                    <h2 style="text-align: center; margin-bottom: 30px; color: #0d47a1;">Criar Conta</h2>
+                    <div class="form-group">
+                        <label for="registerName">Nome Completo:</label>
+                        <input type="text" id="registerName" placeholder="Seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email:</label>
+                        <input type="email" id="registerEmail" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Senha:</label>
+                        <input type="password" id="registerPassword" placeholder="Digite uma senha" required>
+                    </div>
+                    <button class="btn-register" onclick="register()">✓ Registrar</button>
+                    <div class="toggle-form">
+                        <p>Já tem conta? <button onclick="toggleForm()">Faça login aqui</button></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== DASHBOARD ===== -->
+            <div class="dashboard-screen">
+                <div class="user-info">
+                    <div class="user-info-text">
+                        <h3 id="userNameDisplay">Bem-vindo!</h3>
+                        <p id="userEmailDisplay">Email</p>
+                    </div>
+                    <button class="btn-logout" onclick="logout()">Sair</button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" onclick="startNewQuiz()">
+                        <h3>📝</h3>
+                        <h3>Novo Quiz</h3>
+                        <p style="font-size: 0.9em; color: #0d47a1;">Começar novo teste</p>
+                    </div>
+
+                    <div class="dashboard-card" onclick="goToHistory()">
+                        <h3>📊</h3>
+                        <h3>Histórico</h3>
+                        <p id="totalAttempts">0 testes</p>
+                    </div>
+
+                    <div class="dashboard-card" onclick="goToStatistics()">
+                        <h3>📈</h3>
+                        <h3>Estatísticas</h3>
+                        <p id="avgScore">Média: 0%</p>
+                    </div>
+                </div>
+
+                <button class="btn-start-quiz" onclick="startNewQuiz()">🚀 Começar Novo Quiz</button>
+            </div>
+
+            <!-- ===== HISTÓRICO ===== -->
+            <div class="history-screen">
+                <h2 style="color: #0d47a1; margin-bottom: 20px;">📊 Histórico de Tentativas</h2>
+                
+                <div id="historyContent">
+                    <table class="history-table" id="historyTable">
+                        <thead>
+                            <tr>
+                                <th>Data/Hora</th>
+                                <th>Pontuação</th>
+                                <th>Percentual</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <button class="btn-back" onclick="goToDashboard()" style="margin-top: 30px;">← Voltar ao Dashboard</button>
+            </div>
+
+            <!-- ===== QUIZ ===== -->
+            <div class="quiz-screen">
+                <div class="quiz-header">
+                    <div class="progress-bar">
+                        <div class="progress" id="progressBar"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="questionCounter">Questão 1 de 12</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="context-text" id="contextText"></div>
+                    <div class="question-text" id="questionText"></div>
+                    <div class="options" id="optionsContainer"></div>
+                    <div class="feedback" id="feedback"></div>
+                </div>
+
+                <div class="quiz-buttons">
+                    <button class="btn-prev" id="prevButton" onclick="previousQuestion()" style="display:none;">← Anterior</button>
+                    <button class="btn-next" id="nextButton" onclick="nextQuestion()" disabled>Próxima →</button>
+                    <button class="btn-finish" id="finishButton" onclick="finishQuiz()" style="display:none;" disabled>✓ Finalizar</button>
+                </div>
+            </div>
+
+            <!-- ===== RESULTADOS ===== -->
+            <div class="results-screen">
+                <h2 style="color: #0d47a1; margin-bottom: 20px;">📊 Resultado Final</h2>
+
+                <div class="score-circle">
+                    <div class="score-number" id="scoreNumber">0</div>
+                    <div class="score-text">de <span id="totalScore">12</span> acertos</div>
+                </div>
+
+                <div style="font-size: 1.2em; color: #666; margin-bottom: 20px;">
+                    <strong id="percentage">0</strong>% de acertos
+                </div>
+
+                <div class="result-message" id="resultMessage"></div>
+
+                <div class="result-details">
+                    <p>✓ <strong>Questões Corretas:</strong> <span id="correctCount">0</span></p>
+                    <p>✗ <strong>Questões Incorretas:</strong> <span id="incorrectCount">0</span></p>
+                    <p>📈 <strong>Taxa de Acerto:</strong> <span id="successRate">0</span>%</p>
+                    <p>🕐 <strong>Data/Hora:</strong> <span id="resultDateTime">-</span></p>
+                </div>
+
+                <div class="answer-summary" id="answerSummary"></div>
+
+                <div class="btn-group">
+                    <button class="btn-new-quiz" onclick="startNewQuiz()">🔄 Fazer Quiz Novamente</button>
+                    <button class="btn-back" onclick="goToDashboard()">← Voltar ao Dashboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DADOS DO QUIZ =====
+        const questionsData = [
+            {
+                id: 1,
+                context: "A telemedicina tem revolucionado o acesso à saúde, permitindo consultas remotas entre médicos e pacientes. Segundo estudos recentes, mais de 70% dos pacientes em áreas rurais preferem consultas virtuais para economizar tempo e custos de deslocamento.",
+                question: "Com base no contexto, qual é o principal benefício da telemedicina mencionado para pacientes em áreas rurais?",
+                options: [
+                    "A) Melhor diagnóstico através de equipamentos mais modernos",
+                    "B) Economia de tempo e redução de custos de deslocamento",
+                    "C) Eliminação completa da necessidade de consultas presenciais",
+                    "D) Aumento da receita dos hospitais privados"
+                ],
+                correctAnswer: "B) Economia de tempo e redução de custos de deslocamento",
+                difficulty: "Médio"
+            },
+            {
+                id: 2,
+                context: "A inteligência artificial (IA) está sendo aplicada no diagnóstico de câncer de mama através de análise de imagens de mamografia. Pesquisas mostram que algoritmos de IA conseguem detectar tumores com 94% de precisão, frequentemente superando a análise manual de radiologistas em casos complexos.",
+                question: "Qual é a vantagem principal da IA na detecção de câncer de mama conforme o contexto apresentado?",
+                options: [
+                    "A) Substituir completamente os radiologistas",
+                    "B) Alta precisão na detecção de tumores, muitas vezes superior à análise manual",
+                    "C) Reduzir o tempo de tratamento dos pacientes",
+                    "D) Eliminar a necessidade de mamografias"
+                ],
+                correctAnswer: "B) Alta precisão na detecção de tumores, muitas vezes superior à análise manual",
+                difficulty: "Médio"
+            },
+            {
+                id: 3,
+                context: "O prontuário eletrônico de saúde (PES) permite o armazenamento digital de dados médicos dos pacientes, facilitando o acesso rápido às informações clínicas. Hospitais que implementaram o PES relataram redução de 30% nos erros de medicação e aumento de 40% na eficiência administrativa.",
+                question: "De acordo com o texto, quais são os principais benefícios do prontuário eletrônico de saúde?",
+                options: [
+                    "A) Apenas redução de custos operacionais",
+                    "B) Redução de erros de medicação e aumento de eficiência administrativa",
+                    "C) Eliminação de consultas médicas presenciais",
+                    "D) Tratamento automático de doenças"
+                ],
+                correctAnswer: "B) Redução de erros de medicação e aumento de eficiência administrativa",
+                difficulty: "Médio"
+            },
+            {
+                id: 4,
+                context: "A cirurgia robótica permite procedimentos minimamente invasivos com precisão micrométrica. Cirurgiões controlam o robô Da Vinci remotamente, realizando movimentos mais precisos do que seria possível manualmente. Estudos mostram que pacientes submetidos a cirurgias robóticas têm recuperação 25% mais rápida.",
+                question: "Qual é a principal vantagem da cirurgia robótica mencionada no contexto?",
+                options: [
+                    "A) Elimina a necessidade de cirurgiões",
+                    "B) Precisão micrométrica e recuperação mais rápida do paciente",
+                    "C) Redução de custos hospitalares em 100%",
+                    "D) Cura automática de todas as doenças"
+                ],
+                correctAnswer: "B) Precisão micrométrica e recuperação mais rápida do paciente",
+                difficulty: "Médio"
+            },
+            {
+                id: 5,
+                context: "Dispositivos wearables como smartwatches médicos monitoram continuamente sinais vitais como frequência cardíaca, pressão arterial e níveis de oxigenação. Um estudo com 500 pacientes com arritmia cardíaca mostrou que detecção precoce com wearables reduziu internações de emergência em 45%.",
+                question: "Segundo o contexto, qual é o impacto do monitoramento contínuo com dispositivos wearables?",
+                options: [
+                    "A) Diagnóstico garantido de todas as doenças",
+                    "B) Detecção precoce de problemas cardíacos e redução de internações",
+                    "C) Substituição permanente de médicos",
+                    "D) Impossibilidade de pacientes irem ao hospital"
+                ],
+                correctAnswer: "B) Detecção precoce de problemas cardíacos e redução de internações",
+                difficulty: "Médio"
+            },
+            {
+                id: 6,
+                context: "A realidade aumentada (RA) está revolucionando o treinamento de cirurgiões. Estudantes podem praticar procedimentos em ambientes virtuais antes de operar em pacientes reais. Simulações em RA mostram que reduzem complicações cirúrgicas em 35% entre cirurgiões em treinamento.",
+                question: "Como a realidade aumentada beneficia o treinamento cirúrgico conforme descrito?",
+                options: [
+                    "A) Substitui completamente a educação médica universitária",
+                    "B) Permite prática virtual segura e reduz complicações em cirurgias reais",
+                    "C) Garante que nenhum erro ocorrerá durante cirurgias",
+                    "D) Elimina a necessidade de hospitais"
+                ],
+                correctAnswer: "B) Permite prática virtual segura e reduz complicações em cirurgias reais",
+                difficulty: "Médio"
+            },
+            {
+                id: 7,
+                context: "O sequenciamento genético usando tecnologia de próxima geração (NGS) permite análise rápida e completa do genoma humano. Pacientes com histórico de câncer familiar podem fazer testes genéticos em 48 horas, identificando mutações que aumentam o risco. Isso possibilita tratamentos preventivos personalizados.",
+                question: "Qual é a aplicação do sequenciamento genético mencionada no contexto?",
+                options: [
+                    "A) Substituição do tratamento convencional",
+                    "B) Identificação de mutações genéticas para tratamentos preventivos personalizados",
+                    "C) Garantia absoluta de que pacientes não terão câncer",
+                    "D) Eliminação de todos os genes problemáticos"
+                ],
+                correctAnswer: "B) Identificação de mutações genéticas para tratamentos preventivos personalizados",
+                difficulty: "Médio"
+            },
+            {
+                id: 8,
+                context: "Sistemas de análise de imagem médica por IA utilizam redes neurais profundas para examinar tomografias, ressonâncias magnéticas e radiografias. Um hospital implementou esse sistema e reduziu o tempo de análise de imagens de 90 minutos para 15 minutos, acelerando diagnósticos e permitindo atendimento a mais pacientes.",
+                question: "De acordo com o texto, qual é o impacto da análise de imagem por IA no atendimento hospitalar?",
+                options: [
+                    "A) Elimina a necessidade de radiologistas",
+                    "B) Aumento significativo da velocidade de diagnóstico e atendimento a mais pacientes",
+                    "C) Redução de 50% dos salários médicos",
+                    "D) Garantia de diagnósticos 100% corretos"
+                ],
+                correctAnswer: "B) Aumento significativo da velocidade de diagnóstico e atendimento a mais pacientes",
+                difficulty: "Médio"
+            },
+            {
+                id: 9,
+                context: "Aplicativos móveis de saúde (mHealth) permitem que pacientes monitorem sua saúde, recebam lembretes de medicamentos e comuniquem-se com médicos. Uma pesquisa com diabéticos mostrou que o uso de apps de mHealth resultou em 23% de melhora no controle de glicose e maior aderência ao tratamento.",
+                question: "Segundo o contexto, qual é o benefício dos aplicativos mHealth para pacientes crônicos?",
+                options: [
+                    "A) Cura instantânea de todas as doenças",
+                    "B) Melhora no controle da doença e maior aderência ao tratamento",
+                    "C) Eliminação completa da necessidade de medicamentos",
+                    "D) Garantia de que pacientes nunca ficará doente"
+                ],
+                correctAnswer: "B) Melhora no controle da doença e maior aderência ao tratamento",
+                difficulty: "Médio"
+            },
+            {
+                id: 10,
+                context: "A biometria (impressão digital, íris, reconhecimento facial) está sendo usada para garantir a segurança de dados de pacientes. Hospitais que implementaram acesso biométrico aos prontuários eletrônicos reduziram acessos não autorizados em 98% e melhoraram a conformidade com regulamentações de privacidade.",
+                question: "Qual é a função principal da biometria no contexto de segurança hospitalar?",
+                options: [
+                    "A) Substituir completamente os médicos",
+                    "B) Garantir segurança de dados de pacientes e conformidade com privacidade",
+                    "C) Impedir que pacientes acessem seus próprios dados",
+                    "D) Eliminar a necessidade de senhas"
+                ],
+                correctAnswer: "B) Garantir segurança de dados de pacientes e conformidade com privacidade",
+                difficulty: "Médio"
+            },
+            {
+                id: 11,
+                context: "A telemedicina assíncrona permite que pacientes enviem imagens, vídeos e históricos para especialistas avaliarem quando conveniente. Estudos mostram que esse modelo reduz tempo de espera em 60% para especialidades como dermatologia e oftalmologia, mantendo qualidade diagnóstica similar a consultas presenciais.",
+                question: "Como a telemedicina assíncrona melhora o acesso a especialidades conforme o contexto?",
+                options: [
+                    "A) Obriga pacientes a esperar mais tempo",
+                    "B) Reduz tempo de espera significativamente mantendo qualidade diagnóstica",
+                    "C) Impossibilita diagnósticos corretos",
+                    "D) Aumenta os custos de atendimento"
+                ],
+                correctAnswer: "B) Reduz tempo de espera significativamente mantendo qualidade diagnóstica",
+                difficulty: "Médio"
+            },
+            {
+                id: 12,
+                context: "Tecnologias de internet das coisas (IoT) em hospitais conectam equipamentos médicos, camas de pacientes e sensores ambientais. Isso permite monitoramento em tempo real de pacientes internados, alertas automáticos em caso de anomalias e coleta de dados para pesquisa. Hospitais com IoT implementado reduziram infecções hospitalares em 28%.",
+                question: "Qual é o principal benefício da tecnologia IoT em ambientes hospitalares segundo o texto?",
+                options: [
+                    "A) Substituição de toda a equipe médica por robôs",
+                    "B) Monitoramento em tempo real com alertas automáticos e redução de complicações",
+                    "C) Eliminação da necessidade de médicos nos hospitais",
+                    "D) Garantia de que nenhum paciente ficará doente"
+                ],
+                correctAnswer: "B) Monitoramento em tempo real com alertas automáticos e redução de complicações",
+                difficulty: "Médio"
+            }
+        ];
+
+        // ===== ESTADO GLOBAL =====
+        let users = JSON.parse(localStorage.getItem('quizUsers')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        // ===== INICIALIZAÇÃO =====
+        window.onload = function() {
+            if (currentUser) {
+                goToDashboard();
+            }
+        };
+
+        // ===== FUNÇÕES DE AUTENTICAÇÃO =====
+        function toggleForm() {
+            document.getElementById('loginForm').style.display = 
+                document.getElementById('loginForm').style.display === 'none' ? 'block' : 'none';
+            document.getElementById('registerForm').style.display = 
+                document.getElementById('registerForm').style.display === 'none' ? 'block' : 'none';
+        }
+
+        function register() {
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+
+            if (!name || !email || !password) {
+                showMessage('Por favor, preencha todos os campos', 'error');
+                return;
+            }
+
+            if (users.find(u => u.email === email)) {
+                showMessage('Este email já está registrado', 'error');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                password: password,
+                createdAt: new Date().toISOString(),
+                attempts: []
+            };
+
+            users.push(newUser);
+            localStorage.setItem('quizUsers', JSON.stringify(users));
+            showMessage('Conta criada com sucesso! Faça login agora.', 'success');
+            
+            setTimeout(() => {
+                document.getElementById('registerName').value = '';
+                document.getElementById('registerEmail').value = '';
+                document.getElementById('registerPassword').value = '';
+                toggleForm();
+            }, 2000);
+        }
+
+        function login() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!email || !password) {
+                showMessage('Por favor, preencha todos os campos', 'error');
+                return;
+            }
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (!user) {
+                showMessage('Email ou senha incorretos', 'error');
+                return;
+            }
+
+            currentUser = user;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            showMessage('Login realizado com sucesso!', 'success');
+            
+            setTimeout(() => {
+                goToDashboard();
+            }, 1500);
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.setItem('currentUser', JSON.stringify(null));
+            document.querySelector('.login-screen').classList.add('active');
+            document.querySelector('.dashboard-screen').classList.remove('active');
+            document.querySelector('.history-screen').classList.remove('active');
+            document.querySelector('.quiz-screen').classList.remove('active');
+            document.querySelector('.results-screen').classList.remove('active');
+            
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            showMessage('Você foi desconectado', 'success');
+        }
+
+        // ===== NAVEGAÇÃO =====
+        function goToDashboard() {
+            document.querySelector('.login-screen').classList.remove('active');
+            document.querySelector('.dashboard-screen').classList.add('active');
+            document.querySelector('.history-screen').classList.remove('active');
+            document.querySelector('.quiz-screen').classList.remove('active');
+            document.querySelector('.results-screen').classList.remove('active');
+            updateDashboard();
+        }
+
+        function goToHistory() {
+            document.querySelector('.dashboard-screen').classList.remove('active');
+            document.querySelector('.history-screen').classList.add('active');
+            displayHistory();
+        }
+
+        function goToStatistics() {
+            // Pode ser expandido para uma tela de estatísticas detalhadas
+            goToHistory();
+        }
+
+        function updateDashboard() {
+            document.getElementById('userNameDisplay').textContent = `Bem-vindo, ${currentUser.name}!`;
+            document.getElementById('userEmailDisplay').textContent = currentUser.email;
+            document.getElementById('totalAttempts').textContent = `${currentUser.attempts.length} testes`;
+            
+            if (currentUser.attempts.length > 0) {
+                const avgScore = Math.round(
+                    currentUser.attempts.reduce((sum, att) => sum + att.percentage, 0) / currentUser.attempts.length
+                );
+                document.getElementById('avgScore').textContent = `Média: ${avgScore}%`;
+            } else {
+                document.getElementById('avgScore').textContent = 'Média: -';
+            }
+        }
+
+        // ===== QUIZ =====
+        function startNewQuiz() {
+            quizStarted = true;
+            currentQuestionIndex = 0;
+            userAnswers = new Array(questionsData.length).fill(null);
+            
+            document.querySelector('.dashboard-screen').classList.remove('active');
+            document.querySelector('.history-screen').classList.remove('active');
+            document.querySelector('.results-screen').classList.remove('active');
+            document.querySelector('.quiz-screen').classList.add('active');
+            
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            if (currentQuestionIndex >= questionsData.length) {
+                finishQuiz();
+                return;
+            }
+
+            const question = questionsData[currentQuestionIndex];
+            const progress = ((currentQuestionIndex) / questionsData.length) * 100;
+
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+            document.getElementById('questionCounter').textContent = `Questão ${currentQuestionIndex + 1} de ${questionsData.length}`;
+            document.getElementById('contextText').innerHTML = `<div class="context-label">📖 Contexto:</div>${question.context}`;
+            document.getElementById('questionText').textContent = question.question;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option) => {
+                const label = document.createElement('label');
+                label.className = 'option';
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `question-${currentQuestionIndex}`;
+                radio.value = option;
+                radio.onchange = () => selectAnswer(option);
+
+                if (userAnswers[currentQuestionIndex] === option) {
+                    radio.checked = true;
+                    label.classList.add('selected');
+                }
+
+                const text = document.createElement('span');
+                text.className = 'option-text';
+                text.textContent = option;
+
+                label.appendChild(radio);
+                label.appendChild(text);
+                optionsContainer.appendChild(label);
+            });
+
+            document.getElementById('feedback').classList.remove('show');
+            document.getElementById('nextButton').disabled = userAnswers[currentQuestionIndex] === null;
+            document.getElementById('prevButton').style.display = currentQuestionIndex > 0 ? 'block' : 'none';
+            document.getElementById('finishButton').style.display = currentQuestionIndex === questionsData.length - 1 ? 'block' : 'none';
+            document.getElementById('nextButton').style.display = currentQuestionIndex === questionsData.length - 1 ? 'none' : 'block';
+        }
+
+        function selectAnswer(answer) {
+            userAnswers[currentQuestionIndex] = answer;
+            document.getElementById('nextButton').disabled = false;
+            document.getElementById('finishButton').disabled = false;
+
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            event.currentTarget.closest('.option').classList.add('selected');
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questionsData.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+
+        function finishQuiz() {
+            showResults();
+        }
+
+        // ===== RESULTADOS =====
+        function showResults() {
+            document.querySelector('.quiz-screen').classList.remove('active');
+            document.querySelector('.results-screen').classList.add('active');
+
+            let score = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === questionsData[index].correctAnswer) {
+                    score++;
+                }
+            });
+
+            const percentage = Math.round((score / questionsData.length) * 100);
+            const incorrect = questionsData.length - score;
+            const now = new Date();
+
+            document.getElementById('scoreNumber').textContent = score;
+            document.getElementById('totalScore').textContent = questionsData.length;
+            document.getElementById('percentage').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('incorrectCount').textContent = incorrect;
+            document.getElementById('successRate').textContent = percentage;
+            document.getElementById('resultDateTime').textContent = now.toLocaleString('pt-BR');
+
+            const resultMessage = document.getElementById('resultMessage');
+            if (percentage === 100) {
+                resultMessage.textContent = '🏆 Perfeito! Conhecimento excelente!';
+                resultMessage.className = 'result-message excellent';
+            } else if (percentage >= 80) {
+                resultMessage.textContent = '⭐ Muito bom! Excelente desempenho!';
+                resultMessage.className = 'result-message good';
+            } else if (percentage >= 60) {
+                resultMessage.textContent = '👍 Bom! Você tem bom conhecimento.';
+                resultMessage.className = 'result-message good';
+            } else {
+                resultMessage.textContent = '📚 Continue estudando para melhorar!';
+                resultMessage.className = 'result-message review';
+            }
+
+            // Salvar resultado
+            const attempt = {
+                id: Date.now(),
+                date: now.toISOString(),
+                score: score,
+                total: questionsData.length,
+                percentage: percentage,
+                answers: userAnswers.map((ans, idx) => ({
+                    questionId: idx,
+                    userAnswer: ans,
+                    correctAnswer: questionsData[idx].correctAnswer,
+                    isCorrect: ans === questionsData[idx].correctAnswer
+                }))
+            };
+
+            currentUser.attempts.push(attempt);
+            localStorage.setItem('quizUsers', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+            showAnswerSummary();
+        }
+
+        function showAnswerSummary() {
+            const summaryDiv = document.getElementById('answerSummary');
+            summaryDiv.innerHTML = '<h3 style="margin-bottom: 15px; color: #0d47a1;">📋 Resumo das Respostas:</h3>';
+
+            questionsData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correctAnswer;
+                const answerDiv = document.createElement('div');
+                answerDiv.className = `answer-item ${isCorrect ? 'correct' : 'incorrect'}`;
+
+                answerDiv.innerHTML = `
+                    <div class="answer-item-title">Questão ${index + 1}: ${question.question.substring(0, 60)}...</div>
+                    <div class="answer-item-text"><strong>Sua resposta:</strong> ${userAnswers[index] || 'Não respondida'}</div>
+                    <div class="answer-item-text"><strong>Resposta correta:</strong> ${question.correctAnswer}</div>
+                    <div class="answer-item-result">${isCorrect ? '✓ Correto' : '✗ Incorreto'}</div>
+                `;
+
+                summaryDiv.appendChild(answerDiv);
+            });
+        }
+
+        // ===== HISTÓRICO =====
+        function displayHistory() {
+            const historyBody = document.getElementById('historyBody');
+            historyBody.innerHTML = '';
+
+            if (currentUser.attempts.length === 0) {
+                document.getElementById('historyContent').innerHTML = `
+                    <div class="empty-state">
+                        <p>Nenhuma tentativa de quiz registrada ainda.</p>
+                        <p>Comece um novo quiz para criar histórico!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            currentUser.attempts.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(attempt => {
+                const row = document.createElement('tr');
+                const date = new Date(attempt.date);
+                const statusClass = attempt.percentage >= 80 ? 'excellent' : 
+                                   attempt.percentage >= 60 ? 'good' : 'review';
+
+                row.innerHTML = `
+                    <td>${date.toLocaleString('pt-BR')}</td>
+                    <td>${attempt.score} de ${attempt.total}</td>
+                    <td><strong>${attempt.percentage}%</strong></td>
+                    <td><span class="score-badge ${statusClass}">${attempt.percentage >= 80 ? 'Excelente' : attempt.percentage >= 60 ? 'Bom' : 'Para revisar'}</span></td>
+                `;
+                historyBody.appendChild(row);
+            });
+        }
+
+        // ===== MENSAGENS =====
+        function showMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `${type}-message`;
+            messageDiv.textContent = message;
+            messageDiv.style.position = 'fixed';
+            messageDiv.style.top = '20px';
+            messageDiv.style.right = '20px';
+            messageDiv.style.zIndex = '10000';
+            messageDiv.style.maxWidth = '300px';
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
